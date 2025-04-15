@@ -60,10 +60,13 @@ async function findUserByName(str: string): Promise <User | null> {
 app.get("/", (req, res) => {
     res.status(200).send("Ты зашёл на главную страничку.");
 });
-app.get("/kaka", async (req, res) => {
-    const pupel = await findUserByName("Mark_SW");
-    console.log(pupel);
-    res.status(200).send("Ты зашёл на страничку КАКА.");
+app.get("/get_user", async (req, res) => {
+    const pupel: User | null = await findUserByName("Mark_SW");
+    if (pupel === null) {
+        res.status(200).send("Ничего не нашлось.");
+        return;
+    }
+    res.status(200).send(pupel.user);
 });
 
 httpServer.listen(HTTP_PORT, () => {
