@@ -1,7 +1,9 @@
 
 import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+import dotenvFlow from "dotenv-flow";
+// dotenv.config();
+dotenvFlow.config();
 import mariadb from "mariadb";
 
 import http from "http";
@@ -58,6 +60,8 @@ async function findUserByName(str: string): Promise <User | null> {
 }
 
 app.get("/", (req, res) => {
+    if (process.env.NODE_ENV === "development") console.log("development");
+    if (process.env.NODE_ENV === "production") console.log("production");
     res.status(200).send("Ты зашёл на главную страничку.");
 });
 app.get("/get_user", async (req, res) => {
