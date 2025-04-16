@@ -14,11 +14,14 @@ import { join, dirname } from "node:path"
 
 import { SafeUser, User, UserRole, UserColor } from "./types/user.js";
 
-const HTTP_PORT = 3001;
-const HTTPS_PORT = 3002;
+const HTTP_PORT = process.env.NODE_ENV === "development" ? 3001 : 80;
+const HTTPS_PORT = process.env.NODE_ENV === "development" ? 3002 : 443;
 const PAGES = "pages";
 const MAIN_PAGE = "index.html";
 const LOGIN_PAGE = "login.html";
+
+console.log("HTTP-port: ", HTTP_PORT);
+console.log("HTTPS-port: ", HTTPS_PORT);
 
 
 const { CERT, CERT_KEY, PASSPHRASE } = process.env;
@@ -74,7 +77,9 @@ async function findUserByName(str: string): Promise <User | null> {
     }
 }
 
-app.get("/", (req, res) => {   
+app.get("/", (req, res) => {
+    console.log("Мистер жопа");
+    console.log(process.env.NODE_ENV);
     res.status(200).sendFile(mainPage);
 });
 app.get("/get_user", async (req, res) => {
