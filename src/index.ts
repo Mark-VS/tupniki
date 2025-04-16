@@ -9,15 +9,29 @@ import mariadb from "mariadb";
 import http from "http";
 import https from "https";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { join, dirname } from "node:path"
 
 import { SafeUser, User, UserRole, UserColor } from "./types/user.js";
 
 const HTTP_PORT = 3001;
 const HTTPS_PORT = 3002;
+const PAGES = "pages";
+const MAIN_PAGE = "index.html";
+const LOGIN_PAGE = "login.html";
+
 
 const { CERT, CERT_KEY, PASSPHRASE } = process.env;
 if (!CERT || !CERT_KEY) throw new Error("Переменные среды не определены.");
 const { DB_HOST, DB_USER, DB_PASS, DB_NAME } = process.env;
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const __root = join(__dirname, "..");
+
+const mainPage = join(__root, PAGES, MAIN_PAGE);
+const loginPage = join(__root, PAGES, LOGIN_PAGE);
 
 const serverOptions = {
     cert: readFileSync(CERT),
@@ -33,6 +47,7 @@ const pool = mariadb.createPool({
 });
 
 const app = express();
+app.use(express.static("assets"));
 
 const httpServer = http.createServer((req, res) => {
     const host = req.headers.host?.split(":")[0];
@@ -59,10 +74,8 @@ async function findUserByName(str: string): Promise <User | null> {
     }
 }
 
-app.get("/", (req, res) => {
-    if (process.env.NODE_ENV === "development") console.log("development");
-    if (process.env.NODE_ENV === "production") console.log("production");
-    res.status(200).send("Ты зашёл на главную страничку.");
+app.get("/", (req, res) => {   
+    res.status(200).sendFile(mainPage);
 });
 app.get("/get_user", async (req, res) => {
     const pupel: User | null = await findUserByName("Mark_SW");
