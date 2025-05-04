@@ -9,12 +9,16 @@ enum UserColor {
 }
 interface SafeUser {
     id: number;
-    user: string;
+    name: string;
+    email: string;
     role: UserRole;
     color: UserColor;
 }
-interface User extends SafeUser {
+interface FullUser extends SafeUser {
     pass: string;
 }
+interface JwtPayload {
+    data: string;
+}
 
-export { UserRole, UserColor, SafeUser, User };
+export { UserRole, UserColor, SafeUser, FullUser, JwtPayload };

@@ -15,14 +15,25 @@
   "license": "ISC",
   "packageManager": "pnpm@10.8.1",
   "dependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/passport": "^1.0.17",
+    "@types/passport-jwt": "^4.0.1",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "dotenv-flow": "^4.1.0",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.4.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "@types/ejs": "^3.1.5",
     "cross-env": "^7.0.3"
   }
 }

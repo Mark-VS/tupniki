@@ -1,0 +1,265 @@
+@font-face {
+	font-family: "MyFont";
+	src: url("../fonts/ofont.ru_Nunito.ttf") format("truetype");
+	
+}
+html {
+	font-size: 16px;
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	background-color: blanchedalmond;
+	font-family: "MyFont", "Times New Roman", Times, serif;
+}
+.container {
+	box-sizing: border-box;
+	border-width: 0;
+	border-style: solid;
+	border-color: black;
+	min-width: 18rem;
+	min-height: 100vh;
+	
+	display: flex;
+	flex-direction: column;
+}
+.header {
+	background-color: tan;
+	margin: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 4rem;
+	border-style: solid;
+	border-color: rosybrown;
+	border-width: 0 0 1px 0;
+}
+
+.header__menu {
+	border: solid 0 green;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+.header__item {
+	padding: .05rem .2rem .05rem .2rem;
+	border: solid 0 black;
+	text-align: center;
+}
+.header__item:first-child {
+	margin-left: auto;
+	margin-right: 1rem;
+}
+.header__item:last-child {
+	margin-left: 1rem;
+	margin-right: auto;
+}
+.header__item a {
+	color: darkslategrey;
+	text-decoration: none;
+	font-weight: bold;
+}
+.header__authuser {
+	background-color: burlywood;
+	border-style: solid;
+	border-color: sienna;
+	border-width: 0 0 0 1px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0 2rem 0 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.header__authitem {
+	margin: 0;
+	text-align: center;
+}
+.header__authitem a {
+	text-decoration: none;
+	color: darkslategrey;
+	font-weight: bold;
+}
+#gridHead {
+	width: 100%;
+	grid-column-start: 1;
+	grid-column-end: 6;
+	background-color: blanchedalmond;
+	text-align: center;
+	color: darkslategrey;
+	font-size: large;
+}
+.gridTHead {
+	font-weight: bold;
+}
+#myTable {
+	color: saddlebrown;
+	background-color: papayawhip;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80vw;
+	max-width: 70rem;
+	display: grid;
+	grid-template-columns: minmax(auto, 3rem) 1fr 1fr 1.2fr 2fr;
+	gap: 0;
+	justify-content: stretch; /* Значение по умолчанию */
+}
+.grid-el {
+	border-style: solid;
+	border-color: burlywood;
+	border-width: 1px 1px 0 0;
+	padding: 3px 5px 1px 5px;
+}
+.grid-el:nth-last-child(-n+5) {
+	border-bottom-width: 1px;
+}
+.grid-el-zat {
+	border-left-width: 1px;
+	text-align: center;
+}
+.grid-el:hover {
+	background-color: blanchedalmond;
+	cursor: hand;
+}
+
+/* MINITABLE */
+
+#miniTable {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin: 2rem auto;
+	width: 26vw;
+	min-width: 20rem;
+	max-width: 70rem;
+	font-size: large;
+	text-align: center;
+	color: darkslategrey;
+}
+#miniTable h4 {
+	margin: 0;
+	font-size: x-large;
+	color: darkslategrey;
+}
+.miniT-el {
+	border-style: solid;
+	border-color: darkslategrey;
+}
+.miniT-el:nth-child(odd):not(:nth-last-child(-n+2)) {
+	border-width: 0 1px 1px 0;
+}
+.miniT-el:nth-child(even):not(:nth-last-child(-n+2)) {
+	border-width: 0 0 1px 0;
+}
+.miniT-el:nth-last-child(2) {
+	border-width: 0 1px 0 0;
+}
+.miniT-el:last-child {
+	border-width: 0;
+}
+
+
+/* /// MINITABLE /// */
+
+/* FOOTER */
+
+.footer {
+	height: 4rem;
+	border-style: solid;
+	border-color: rosybrown;
+	border-width: 1px 0 0 0;
+	background-color: tan;
+	text-align: right;
+	padding: 1rem 1rem 0 0;
+	font-style: italic;
+	font-size: .8rem;
+	
+	margin-top: auto;
+}
+.footer p {
+	margin: 0;
+}
+
+.kakashka {
+	color: grey;
+	margin: 0;
+}
+.mark-color {
+	color: green;
+}
+.stitch-color {
+	color: blue;
+}
+@media (max-width: 56rem) {
+	.header__menu {
+		
+	}
+	.header__item:first-child {
+		margin-right: .5rem;
+	}
+	.header__item:last-child {
+		margin-left: .5rem;
+	}
+	.header__authuser {
+
+		padding: 0 1rem;
+	}
+	#myTable {
+		width: 90vw;
+		grid-template-columns: minmax(auto, 3rem) 1fr 1fr 1.8fr;
+	}
+	#gridHead {
+		grid-column-start: 1;
+		grid-column-end: 5;
+	}
+
+	.inv {
+		display: none;
+	}
+	
+	#miniTable {
+		width: 20rem;
+	}
+
+}
+
+
+@media (max-width: 38rem) {
+	.header {
+		height: 5rem;
+	}
+	.header__menu {
+		flex-direction: column;
+		justify-content: center;
+		
+	}
+	.header__item:first-child {
+		margin: 0;
+	
+	}
+	.header__item:last-child {
+		margin: 0;
+	}
+	.header__authuser {
+		padding: 0 .3rem 0 .5rem;
+	}
+	#gridHead {
+		grid-column-start: 1;
+		grid-column-end: 4;
+	}
+	#myTable {
+		width: 98vw;
+		max-width: 100%;
+		grid-template-columns: minmax(auto, 2.4rem) 1fr 2fr;
+	}
+	.inv {
+		display: none
+	}
+	.inv2 {
+		display: none
+	}
+
+}
