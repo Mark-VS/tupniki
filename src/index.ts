@@ -67,6 +67,7 @@ const pool = mariadb.createPool({
 const app = express();
 const urlEncodedParser = express.urlencoded({ extended: true });
 app.use(express.static("assets"));
+// app.use(express.static(join(__dirname, "assets")));
 app.set("view engine", "ejs");
 // Указываем путь к папке с шаблонами - дефолтное значение
 app.set("views", join(__root, "views"));
