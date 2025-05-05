@@ -1,3 +1,11 @@
+@font-face {
+	font-family: "kraken";
+	src: url("/fonts/ofont.ru_Nunito.ttf") format("truetype");
+}
 .kakashka {
     color: purple;
 }
+.boba {
+    color: black;
+    font-family: "kraken"  
+ }
