@@ -29,6 +29,7 @@
 			<div class="grid-el inv2 gridTHead">пароль</div>
 			<div class="grid-el inv gridTHead">eMail</div>
 			<div class="grid-el gridTHead">регистрация</div>
+            <script src="scripts/niki_entry.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
             <script>
             	function numberToString(myNumber, myArr) {
@@ -57,8 +58,19 @@
             				return `${myNumberString} ${myArr[1]}`;
 					return `${myNumberString} ${myArr[2]}`;
             	}
+            	
+            	function lyly (event) {
+            		alert("Жужуж: " + event.target.textContent);
+            	}
+            	function clickListener (colNum=1, event) {
+            		let allCells = document.querySelectorAll(".grid-el");	// NodeList всех элементов
+            		let cellIndex = Array.from(allCells).indexOf(event.target);	// проебразуем NodeList в массив
+            		let rowIndex = Math.floor(cellIndex/5);		//	получаем номер строки
+            		let nN = rowIndex*5 + colNum;						//	номера ячеек с никнеймом 
+            		alert("Дудуду: " + allCells[nN].textContent);	
+            	}
 
-            	const shushu = async () => {
+            	const writeRow = async () => {
             		const response = await fetch("/getkukuruza");
             		if (response.ok) {
             			let jsonRes = await response.json();
@@ -95,16 +107,23 @@
             					fullString = days ? fullString + daysString + ", " : fullString;
             					fullString = hours ? fullString + hoursString : fullString; 
             			// Добавляем текст в ячейки
-            				divId.textContent = nicknameObject.id;
+            				// divId.textContent = nicknameObject.id;	// реальный id из базы данных
+            				divId.textContent = index + 1;		// номер вывода по порядку
             					divId.className = "grid-el grid-el-zat";
+            					divId.addEventListener("click", (event) => { clickListener(1, event); });
             				divNick.textContent = nicknameObject.nickname;
             					divNick.className = "grid-el";
+            					divNick.addEventListener("click", lyly);
             				divPass.textContent = nicknameObject.password;
             					divPass.className = "grid-el inv2";
+            					// divPass.addEventListener("click", lyly2);
+            					divPass.addEventListener("click", (event) => { clickListener(1, event); });
             				divEmail.textContent = nicknameObject.email;
             					divEmail.className = "grid-el inv";
+            					divEmail.addEventListener("click", (event) => { clickListener(1, event); });
             				divReg.textContent = fullString;
             					divReg.className = "grid-el";
+            					divReg.addEventListener("click", (event) => { clickListener(1, event) });
             			// добавляем созданные div-элементы к таблице
             				loloTable.appendChild(divId);
             				loloTable.appendChild(divNick);
@@ -116,7 +135,7 @@
             			alert("Ошибка HTTP: " + response.status);	
             		}
             	}
-            	shushu();
+            	writeRow().then(addRows);	// навешиваем обработчики событий на ячейки ПОСЛЕ загрузки данных
             
 				document.write('<div class="grid-el grid-el-zat">3</div>');
 				document.write('<div class="grid-el">Jopa</div>');
@@ -148,6 +167,6 @@
 	</div>
 	</div>
 	
-	<script src="scripts/niki_entry.js"></script>
+
 </body>
 </html>
