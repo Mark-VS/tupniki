@@ -68,7 +68,7 @@
             		let rowIndex = Math.floor(cellIndex/5);		//	получаем номер строки
             		let nN = rowIndex*5 + colNum;						//	номера ячеек с никнеймом 
             		alert("Дудуду: " + allCells[nN].textContent);
-            		window.location.href = "https://localhost:3002/nickinfo?nickname=" + allCells[nN].textContent;
+            		window.location.href = "/nickinfo?nickname=" + allCells[nN].textContent;
             	}
 
             	const writeRow = async () => {
