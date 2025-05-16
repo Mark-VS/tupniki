@@ -29,6 +29,8 @@ const LOGIN_PAGE = "login.html";
 const REG_PAGE = "reg.html";
 const PROTECTED_PAGE = "protected.ejs";
 const NIKI_PAGE = "niki.html";
+const NICKINFO_PAGE = "nickinfo.ejs";
+const NICKINFO_TEST_PAGE = "nickinfo.html";
 
 console.log("HTTP-port: ", HTTP_PORT);
 console.log("HTTPS-port: ", HTTPS_PORT);
@@ -46,9 +48,12 @@ const __root = join(__dirname, "..");
 const mainPage = join(__root, PAGES, MAIN_PAGE);
 const loginPage = join(__root, PAGES, LOGIN_PAGE);
 const regPage = join(__root, PAGES, REG_PAGE);
-const protectedPage = PROTECTED_PAGE;
 // const nikiPage = NIKI_PAGE;
 const nikiPage = join(__root, PAGES, NIKI_PAGE);
+// veiws
+const protectedPage = PROTECTED_PAGE;
+const nickInfoPage = NICKINFO_PAGE;
+const nickInfoTestPage = join(__root, PAGES, NICKINFO_TEST_PAGE);    // временная
 
 const serverOptions = {
     cert: readFileSync(CERT),
@@ -97,7 +102,7 @@ async function findUserByName(str: string): Promise <FullUser | null> {
     }
 }
 
-async function findNicknameByName(str: string): Promise <NicknameInterface[] | null> {
+async function findNicknameByName(str: string): Promise <NicknameInterface | null> {
     let conn;
     const sqlQuery = "SELECT * FROM nicknames WHERE nickname = ?;";
     try {
@@ -239,6 +244,59 @@ app.get("/kukuruza", async (req, res) => {
     res.status(200).sendFile(nikiPage);
 });
 
+/*
+app.get("/nickinfo", async (req, res) => {
+    const nicknameToFind = req.query.nickname
+    console.log(nicknameToFind);
+    if (typeof nicknameToFind !== "string") {
+        res.status(200).send("Ты нифига не передал.");
+        return;  
+    }
+    if (!nicknameToFind) {
+        res.status(200).send("Пустая строка");
+        return;
+    }
+
+    const lll: NicknameInterface | null = await findNicknameByName(nicknameToFind);
+    if (!lll) {
+        res.status(200).send(`Никнейм "${nicknameToFind}" не найден в базе данных.`);
+        return;
+    }
+    res.status(200).render(nickInfoPage, { nick: lll });
+   
+});
+*/
+
+
+app.get("/nickinfo", async (req, res) => {
+    try {
+        const nicknameToFind = req.query.nickname
+        console.log(nicknameToFind);
+        if (typeof nicknameToFind !== "string")
+            throw new Error("Ты нифига не передал.");
+        if (!nicknameToFind)
+            throw new Error("Пустая строка.");
+        const lll: NicknameInterface | null = await findNicknameByName(nicknameToFind);
+        if (!lll)
+            throw new Error(`Никнейм "${nicknameToFind}" не найден в базе данных.`);
+        res.status(200).render(nickInfoPage, { nick: lll });
+    } catch (err) {
+        if (err instanceof Error) {
+            res.status(400).send(err.message);
+        } else {
+            res.status(500).send("Произошла неизвестная ошибка.");
+        }
+    }
+    
+});
+
+// Временная страничка - создание nickInfoPage
+app.get("/testinfo", (req, res) => {
+    res.status(200).sendFile(nickInfoTestPage);
+});
+
+
+
 app.get("/protected", cookieParser(), requireAuthCustom, (req, res) => {
     const cUser = req.user?.name;
     res.status(200).render(protectedPage, { myKey: cUser });
@@ -269,6 +327,14 @@ app.post("/reg", urlEncodedParser, async (req, res) => {
         if (conn) conn.end();
     }
     res.status(200).send("Ответ на форму регистрации.");
+});
+
+app.get("/kakasha/:kaka/:perd", (req, res) => {
+    const shusha = req.params.kaka;
+    const shusha2 = req.params.perd;
+    console.log(shusha);
+    console.log(shusha2);
+    res.status(200).send("ffafa: " + shusha + ", " + shusha2);
 });
 
 httpServer.listen(HTTP_PORT, () => {
